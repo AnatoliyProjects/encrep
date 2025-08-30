@@ -8,7 +8,7 @@ The MIT License (MIT). Copyright © 2025 Anatoly Petrov <petrov.projects@gmail.c
 
 # Rationale
 
-Backups are crucial for sustainable development.  
+Backups are crucial for sustainable development.
 Even with cloud-based solutions, a Git repository can be compromised or accidentally deleted - either by a malicious actor or by the owner.
 
 Also, in the age of LLMs, there's growing concern about whether codebases stored in the cloud are truly secure.
@@ -25,6 +25,16 @@ As a result, many companies choose to use self-hosted Git servers. However, for 
 
 With this approach, your codebase remains safe - even if your workstation fails.
 Moreover, since **Encrep** dumps to S3 only **encrypted data**, you don’t need to worry about anyone accessing your codebase.
+
+# Installation
+
+**Encrep** requires Python 3.13. Ensure that you have the appropriate version of Python installed by running `which python` or `which python3`.
+
+If everything is set up correctly, run `pip install encrep` or `pip3 install encrep` in your terminal.
+
+This will download the package from [PyPi](https://pypi.org/project/encrep/) and add **Encrep** to your `PATH`.
+
+To verify that the installation was successful, run `which encrep`.
 
 # Overview
 
@@ -149,20 +159,24 @@ All arguments (including defaults) will be printed in your terminal (see the *Co
 
 # Commands
 
-Below are **Encrep** commands with brief descriptions.  
-For more details (including available subcommands and options), use the built-in **Encrep** help.
+Below are **Encrep** commands with brief descriptions:
 
 | Command | Description                                                               |
 |---------|---------------------------------------------------------------------------|
-| setup   | Set up secrets, AWS region, and bucket name.                              |                                                                                                                                                  │
-| cleanup | Remove the secrets file.                                                  |                                                                                                                              │
-| loc     | Show path to secrets file.                                                |                                                                                                                            │
-| tree    | Display the structure of the AWS S3 bucket specified in the secrets file. |                                                                                                                      │
-| ls      | List the repos available from AWS S3.                                     |                                                                                                                            │
-| dump    | Dump a repo to AWS S3.                                                    |                                                                                                                            │
-| restore | Restore a repo from AWS S3.                                               |                                                                                                                            │
-| rm      | Remove a single repo backup from AWS S3 for the specified date.           |                                                                                                                            │
+| setup   | Set up secrets, AWS region, and bucket name.                              |
+| cleanup | Remove the secrets file.                                                  |
+| loc     | Show path to secrets file.                                                |
+| tree    | Display the structure of the AWS S3 bucket specified in the secrets file. |
+| ls      | List the repos available from AWS S3.                                     |
+| dump    | Dump a repo to AWS S3.                                                    |
+| restore | Restore a repo from AWS S3.                                               |
+| rm      | Remove a single repo backup from AWS S3 for the specified date.           |
 | drop    | Delete multiple repo backups from AWS S3 within a specified date range.   |
+
+For more details, use the built-in **Encrep** help.
+For example, run `encrep dump repo --help` to get a description of the `dump repo` subcommand and see the available options.
+
+You can also check the auto-generated docs here: [COMMANDS.md](/COMMANDS.md). To generate the docs yourself, run `typer encrep.main utils docs --output README.md --name encrep`.
 
 # Testing
 

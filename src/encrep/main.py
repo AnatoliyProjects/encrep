@@ -69,7 +69,7 @@ from typer import Context, Exit, Option, Typer
 
 
 __author__ = "Anatoly Petrov"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 ENCREP_SECRETS_DEFAULT: Final = "encrep-secrets.json"
 AWS_PAGINATION_LIMIT: Final = 1000
