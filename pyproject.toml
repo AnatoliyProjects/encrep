@@ -17,9 +17,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://pypi.org/project/encrep/"
-repository = "https://github.com/AnatoliyProjects/encrep"
-documentation = "https://pypi.org/project/encrep/"
+homepage = "https://github.com/AnatoliyProjects/encrep"
 
 [tool.poetry]
 packages = [{include = "encrep", from = "src"}]
