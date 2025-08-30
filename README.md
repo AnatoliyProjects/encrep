@@ -87,21 +87,21 @@ For restoring *unversioned files (misc)*, **Encrep** performs the following oper
 
 ## Security
 
-*Firstly*, ensure that your Encrep secrets file is secure. It stores the AWS access key ID (AKID), AWS secret key (SK), and the Encrep secret key. 
-This is very sensitive data and it is not encrypted. The secrets file is automatically created by **Encrep** during the setup stage when you run the `encrep setup` command.  
-You can locate your secrets file with the `encrep loc` command, and you may delete it with the `encrep cleanup` command 
+*Firstly*, ensure that your Encrep secrets file is secure. It stores the AWS access key ID (AKID), AWS secret key (SK), and the Encrep secret key.
+This is very sensitive data and it is not encrypted. The secrets file is automatically created by **Encrep** during the setup stage when you run the `encrep setup` command.
+You can locate your secrets file with the `encrep loc` command, and you may delete it with the `encrep cleanup` command
 (simple unlinking; for complete deletion, including multiple overwrites, use specialized tools).
 
-*Secondly*, remember that all dump files stored in AWS S3 are encrypted by **Encrep** itself, not by AWS.  
+*Secondly*, remember that all dump files stored in AWS S3 are encrypted by **Encrep** itself, not by AWS.
 Thus, if you lose the Encrep secret key specified in the `encrep-secrets.json` file, you will not be able to restore your repos.
 
-*Thirdly*, **Encrep** uses `cryptography.fernet.Fernet` under the hood, which provides authenticated cryptography.  
+*Thirdly*, **Encrep** uses `cryptography.fernet.Fernet` under the hood, which provides authenticated cryptography.
 This means that Fernet verifies the integrity of the data and ensures it has not been tampered before returning it.
 Thus, you don't need to use `SHA256` or other hashes for your dump files; everything will be handled by Fernet.
 
 *Fourthly*, we've made every effort to make **Encrep** as secure as possible. We've used only well-known third-party packages 
-(`boto3`, `cryptography`, `typer`, `rich` for the core module; `pytest`, `moto` for testing and mocking) and thoroughly tested our code.  
-At the same time, since we are dealing with your AWS keys, we recommend that you inspect the codebase yourself.  
+(`boto3`, `cryptography`, `typer`, `rich` for the core module; `pytest`, `moto` for testing and mocking) and thoroughly tested our code.
+At the same time, since we are dealing with your AWS keys, we recommend that you inspect the codebase yourself.
 It's well-structured and well-documented, so it's easy to understand and navigate.
 
 # Usage
@@ -110,7 +110,7 @@ Here is a how-to example featuring some of the most useful **Encrep** commands.
 
 The current working directory (CWD) is always the `.../encrep` folder, since we are going to dump and restore **Encrep** itself.
 
-**Encrep** provides useful defaults, so you'll rarely need to specify explicit CLI arguments.  
+**Encrep** provides useful defaults, so you'll rarely need to specify explicit CLI arguments.
 Just set the proper working directory (in your case, it will be the root directory of your repo).
 
 All arguments (including defaults) will be printed in your terminal (see the *Command* panel).
