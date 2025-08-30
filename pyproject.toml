@@ -1,6 +1,6 @@
 [project]
 name = "encrep"
-version = "1.0.1"
+version = "1.0.2"
 description = "CLI tool for dumping and restoring Git repos via AWS S3."
 authors = [
     {name = "Anatoly Petrov",email = "petrov.projects@gmail.com"}
