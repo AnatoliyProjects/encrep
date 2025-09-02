@@ -562,7 +562,7 @@ def pretty_size(num_bytes):
     return f"{num_bytes:.2f} ZB"
 
 
-def archive(files: Iterable[str | PathLike[str]], repo: str | PathLike[str]) -> bytes:
+def archive(files: Iterable[str | PathLike[str]], repo: pathlib.Path) -> bytes:
     """Create a zip archive with the given files."""
     with (
         tempfile.TemporaryFile(mode="w+b") as f,
@@ -572,7 +572,17 @@ def archive(files: Iterable[str | PathLike[str]], repo: str | PathLike[str]) -> 
     ):
         repo = pathlib.Path(repo)
         for file in files:
-            arc.write(repo / file, file)
+            # Git escapes Unicode characters in file paths. For example:
+            # 'utf8-test-ßµ™∃' becomes 'utf8-test-\\303\\237\\302\\265\\342\\204\\242\\342\\210\203'
+            # (as seen in a real case from boost/libs/wave/test/testwave/testfiles).
+            # As a result, the actual file may not exist at the escaped path.
+            # To prevent failure, we check for FileNotFoundError when archiving.
+            src = repo / file
+            try:
+                arc.write(src, file)
+            except FileNotFoundError:
+                msg = f":exclamation: Unable to archive. File doesn't exist: '{src}'."
+                console.print(msg)
         arc.close()
         f.seek(0)
         return f.read()
@@ -685,8 +695,16 @@ drop_app = create_app()
 app.add_typer(ls_app, name="ls", help="List the repos available from AWS S3.")
 app.add_typer(dump_app, name="dump", help="Dump a repo to AWS S3.")
 app.add_typer(restore_app, name="restore", help="Restore a repo from AWS S3.")
-app.add_typer(rm_app, name="rm", help="Remove a single repo backup from AWS S3 for the specified date.")
-app.add_typer(drop_app, name="drop", help="Delete multiple repo backups from AWS S3 within a specified date range.")
+app.add_typer(
+    rm_app,
+    name="rm",
+    help="Remove a single repo backup from AWS S3 for the specified date.",
+)
+app.add_typer(
+    drop_app,
+    name="drop",
+    help="Delete multiple repo backups from AWS S3 within a specified date range.",
+)
 
 console = Console(color_system="256")
 err_console = Console(color_system="256", stderr=True)
