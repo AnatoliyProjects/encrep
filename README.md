@@ -1,4 +1,4 @@
-# Encrep v. 1.0.3
+# Encrep v. 1.0.4
 
 **CLI tool for dumping and restoring Git repos via AWS S3.**
 

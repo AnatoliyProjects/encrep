@@ -69,7 +69,7 @@ from typer import Context, Exit, Option, Typer
 
 
 __author__ = "Anatoly Petrov"
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 ENCREP_SECRETS_DEFAULT: Final = "encrep-secrets.json"
 AWS_PAGINATION_LIMIT: Final = 1000
@@ -168,7 +168,7 @@ class ExclusionRule:
     """Rule for excluding unversioned files from archiving (case-sensitive)."""
 
     pattern: str
-    comp: Literal["prefix", "suffix", "full-match"]
+    comp: Literal["prefix", "suffix", "contains", "full-match"]
 
     def match(self, file: str) -> bool:
         """Return True if a file should be excluded from archiving."""
@@ -177,8 +177,12 @@ class ExclusionRule:
                 return file.startswith(self.pattern)
             case "suffix":
                 return file.endswith(self.pattern)
+            case "contains":
+                return self.pattern in file
             case "full-match":
                 return file == self.pattern
+        # Other
+        raise ValueError(f"Invalid pattern: {self.pattern}")
 
 
 def is_excluded(file: str, rules: list[ExclusionRule]) -> bool:
