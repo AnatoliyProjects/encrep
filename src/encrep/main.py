@@ -69,7 +69,7 @@ from typer import Context, Exit, Option, Typer
 
 
 __author__ = "Anatoly Petrov"
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 ENCREP_SECRETS_DEFAULT: Final = "encrep-secrets.json"
 AWS_PAGINATION_LIMIT: Final = 1000
@@ -859,7 +859,8 @@ def _exclude_file() -> list[ExclusionRule]:
     res = []
     while True:
         comp = Prompt.ask(
-            "Choose the comparator", choices=["prefix", "suffix", "full-match"]
+            "Choose the comparator",
+            choices=["prefix", "suffix", "contains", "full-match"],
         )
         pattern = Prompt.ask("Enter a pattern for excluding")
         res.append(ExclusionRule(pattern, comp))  # type: ignore[arg-type]
